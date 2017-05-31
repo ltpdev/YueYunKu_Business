@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="cool_weather"></dbname>
+    <version value="1"></version>
+    <list>
+        <mapping class="com.gdcp.yueyunku_business.database.Province"></mapping>
+        <mapping class="com.gdcp.yueyunku_business.database.City"></mapping>
+        <mapping class="com.gdcp.yueyunku_business.database.County"></mapping>
+    </list>
+</litepal>

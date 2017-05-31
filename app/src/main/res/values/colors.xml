@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="edt">#AAAAAA</color>
+    <color name="btnlogin">#ffffff</color>
+    <color name="bg_layout">#FFFFFF</color>
+    <color name="transparent">#66000000</color>
+    <color name="noclick">#C0C0C0</color>
+    <color name="bg_diver">#DDDDDD</color>
+    <color name="bg_fragment">#EDEDED</color>
+</resources>

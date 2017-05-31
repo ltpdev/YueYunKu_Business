@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs xmlns:android="http://schemas.android.com/apk/res/android">
+    <tab
+        id="@+id/tab_activity"
+        icon="@mipmap/icon_huodong_nomall"
+        title="活动" />
+    <tab
+        id="@+id/tab_dingdan"
+        icon="@mipmap/icon_dingdan_nomall"
+        title="订单" />
+    <tab
+        id="@+id/tab_me"
+        icon="@mipmap/iocn_wo_nomall"
+        title="我" />
+</tabs>

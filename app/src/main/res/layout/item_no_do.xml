@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginTop="2dp"
+              android:layout_width="match_parent"
+              android:layout_height="120dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_place_sport"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/loadingimg"
+            android:layout_width="120dp"
+            android:layout_height="120dp"/>
+        <LinearLayout
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_name_participant"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:drawableLeft="@mipmap/lianxiren"
+                android:textSize="15sp"
+                android:text="发起人：黄小明"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_phone_participant"
+                android:drawableLeft="@mipmap/shouji"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="12dp"
+                android:textSize="15sp"
+                android:text="手机号码：12345678901"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_time_sport"
+                android:drawableLeft="@mipmap/time"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="15sp"
+                android:text="运动时间：09:00-12:00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_price_place"
+                android:drawableLeft="@mipmap/dollar"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="15sp"
+                android:text="价格：18元/h"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -27,7 +27,13 @@ public class LoginPresenterImpl implements LoginPresenter{
             @Override
             public void done(User user, BmobException e) {
                 if(user!=null){
-                    loginView.onLoginSuccess();
+                    if (user.getType()==1){
+                        loginView.onLoginSuccess();
+                    }
+                    else {
+                        BmobUser.logOut();
+                        loginView.notBusiness();
+                    }
                 }else {
 
                     loginView.onLoginFailed(e.getMessage());

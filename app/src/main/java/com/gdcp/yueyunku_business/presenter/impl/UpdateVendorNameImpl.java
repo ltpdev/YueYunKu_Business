@@ -25,7 +25,7 @@ public class UpdateVendorNameImpl implements UpdateVendorNamePresenter{
             return;
         }
         User user=new User();
-        user.setVendorName(name);
+        user.setUsername(name);
         user.update(objectId,new UpdateListener() {
             @Override
             public void done(BmobException e) {

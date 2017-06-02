@@ -12,7 +12,7 @@ public interface SendPresenter {
 
     void uploadPhotoToBmob(String picPath);
 
-    void publishActivity(String unit, String name, String intro, String fileUrl, String beginTime, String endTime, String rule);
+    void publishActivity(String unit, String name, String intro, String fileUrl, String beginTime, String endTime);
 
-    void publishActivityWithJiangli(String unit, String name, String intro, String fileUrl, String beginTime, String endTime, String rule, String typeJiangping, String jiangpingNum, String kaijiangTime);
+    void publishActivityWithJiangli(String unit, String name, String intro, String fileUrl, String beginTime, String endTime, String rule, String typeJiangping, String jiangpingNum);
 }

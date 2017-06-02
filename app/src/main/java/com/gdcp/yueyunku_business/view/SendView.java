@@ -37,4 +37,6 @@ public interface SendView {
     void endTimeFail();
 
     void kaijiangTimeFail();
+
+    void picPathError();
 }

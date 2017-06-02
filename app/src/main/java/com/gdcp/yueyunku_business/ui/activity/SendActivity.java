@@ -32,7 +32,7 @@ import me.iwf.photopicker.PhotoPicker;
  * Created by Asus on 2017/5/22.
  */
 
-public class SendActivity extends BaseActivity implements SendView {
+public class SendActivity extends BaseActivity implements SendView{
     @BindView(R.id.tv_tool_title)
     TextView tvToolTitle;
     @BindView(R.id.tv_send)
@@ -47,6 +47,7 @@ public class SendActivity extends BaseActivity implements SendView {
     EditText edtJianchengHuodong;
     @BindView(R.id.edt_rule_activity)
     EditText edtRuleActivity;
+    @BindView(R.id.tv_time_begin)
     TextView tvTimeBegin;
     @BindView(R.id.tv_time_end)
     TextView tvTimeEnd;
@@ -60,8 +61,6 @@ public class SendActivity extends BaseActivity implements SendView {
     EditText edtTypeJiangping;
     @BindView(R.id.edt_num_jiangping)
     EditText edtNumJiangping;
-    @BindView(R.id.tv_danwei_activity)
-    TextView tvDanweiActivity;
     private SendPresenter sendPresenter;
     private String picPath = null;
 
@@ -90,11 +89,11 @@ public class SendActivity extends BaseActivity implements SendView {
     }
 
     private void initText() {
-        String vendorname=getIntent().getStringExtra("vendorname");
+        /*String vendorname=getIntent().getStringExtra("vendorname");*/
         tvToolTitle.setText(getString(R.string.activity_fabu));
         tvSend.setVisibility(View.VISIBLE);
         tvSend.setText(getString(R.string.fabu));
-        tvDanweiActivity.setText(vendorname);
+      /*  tvDanweiActivity.setText(vendorname);*/
     }
 
     private void initToolbar() {
@@ -156,7 +155,7 @@ public class SendActivity extends BaseActivity implements SendView {
 
     @Override
     public void uploadPhotoSuccess(String fileUrl) {
-        String unit = tvDanweiActivity.getText().toString();
+       /* String unit = tvDanweiActivity.getText().toString();*/
         String name = edtNameActivity.getText().toString();
         String intro = edtJianchengHuodong.getText().toString();
         String beginTime = tvTimeBegin.getText().toString();
@@ -168,9 +167,10 @@ public class SendActivity extends BaseActivity implements SendView {
         String kaijiangTime = tvTimeKaijiang.getText().toString();
 
         if (switchButton.isChecked()) {
-            sendPresenter.publishActivityWithJiangli(unit, name, intro, fileUrl, beginTime, endTime, rule, typeJiangping, jiangpingNum, kaijiangTime);
+            sendPresenter.publishActivityWithJiangli(name, intro, fileUrl, beginTime, endTime, rule, typeJiangping, jiangpingNum, kaijiangTime);
         } else {
-            sendPresenter.publishActivity(unit, name, intro, fileUrl, beginTime, endTime, rule);
+
+            sendPresenter.publishActivity(name, intro, fileUrl, beginTime, endTime, rule);
         }
 
 
@@ -250,6 +250,11 @@ public class SendActivity extends BaseActivity implements SendView {
     @Override
     public void kaijiangTimeFail() {
         toast(getString(R.string.fail_kaijiangTime));
+    }
+
+    @Override
+    public void picPathError() {
+        toast(getString(R.string.pic_select_not));
     }
 
 

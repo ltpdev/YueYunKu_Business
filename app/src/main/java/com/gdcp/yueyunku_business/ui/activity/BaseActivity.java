@@ -3,9 +3,11 @@ package com.gdcp.yueyunku_business.ui.activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
@@ -23,7 +25,7 @@ import cn.bmob.v3.Bmob;
  * Created by Asus on 2017/5/10.
  */
 
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
 
@@ -31,6 +33,8 @@ public abstract class BaseActivity extends AppCompatActivity{
     private int year;
     private int month;
     private int day;
+    private AlertDialog.Builder builder;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
@@ -53,19 +57,19 @@ public abstract class BaseActivity extends AppCompatActivity{
         return true;
     }
 
-    protected void startActivity(Class activity,boolean isFinish){
-        Intent intent=new Intent(this,activity);
+    protected void startActivity(Class activity, boolean isFinish) {
+        Intent intent = new Intent(this, activity);
         startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             finish();
         }
     }
 
-    protected void startActivity(Class activity,String key,String value,boolean isFinish){
-        Intent intent=new Intent(this,activity);
-        intent.putExtra(key,value);
+    protected void startActivity(Class activity, String key, String value, boolean isFinish) {
+        Intent intent = new Intent(this, activity);
+        intent.putExtra(key, value);
         startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             finish();
         }
     }
@@ -97,27 +101,52 @@ public abstract class BaseActivity extends AppCompatActivity{
         mInputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
-    protected void init(){}
+    protected void init() {
+    }
 
     protected abstract int getLayoutResId();
 
 
-
-    public void showDatePickerDialog(final TextView textView){
-        Calendar mycalendar=Calendar.getInstance();
-        year=mycalendar.get(Calendar.YEAR); //获取Calendar对象中的年
-        month=mycalendar.get(Calendar.MONTH);//获取Calendar对象中的月
-        day=mycalendar.get(Calendar.DAY_OF_MONTH);//获取这个月的第几天
-        DatePickerDialog dpd=new DatePickerDialog(BaseActivity.this, new DatePickerDialog.OnDateSetListener() {
+    public void showDatePickerDialog(final TextView textView) {
+        Calendar mycalendar = Calendar.getInstance();
+        year = mycalendar.get(Calendar.YEAR); //获取Calendar对象中的年
+        month = mycalendar.get(Calendar.MONTH);//获取Calendar对象中的月
+        day = mycalendar.get(Calendar.DAY_OF_MONTH);//获取这个月的第几天
+        DatePickerDialog dpd = new DatePickerDialog(BaseActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                     selected(year,month,dayOfMonth,textView);
+                selected(year, month, dayOfMonth, textView);
             }
         }, year, month, day);
         dpd.show();//显示DatePickerDialog组件
     }
 
-    public void selected(int year, int month, int dayOfMonth,TextView textView) {
+    public void selected(int year, int month, int dayOfMonth, TextView textView) {
+
+    }
+
+    protected void showAlertDialog(String msg) {
+        if (builder == null) {
+            builder = new AlertDialog.Builder(BaseActivity.this);
+        }
+        builder.setMessage(msg);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                    doSomeThing();
+            }
+        });
+
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+    }
+
+    protected  void doSomeThing(){
 
     }
 

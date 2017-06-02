@@ -42,7 +42,7 @@ public class UpdateVendorNameActivity extends BaseActivity implements UpdateVend
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        edtUpdateNameVendor.setText(getIntent().getStringExtra("vendorname"));
+        edtUpdateNameVendor.setText(getIntent().getStringExtra("username"));
         mTvToolTitle.setText(getString(R.string.name_vendor));
         tvCommit.setText(getString(R.string.commit));
         tvCommit.setVisibility(View.VISIBLE);

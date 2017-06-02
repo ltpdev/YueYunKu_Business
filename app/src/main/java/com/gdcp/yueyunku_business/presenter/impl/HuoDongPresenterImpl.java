@@ -33,6 +33,7 @@ public class HuoDongPresenterImpl implements HuoDongPresenter{
          BmobQuery<Activity> query = new BmobQuery<Activity>();
         query.order("-updatedAt");
         query.setLimit(5);
+        query.include("business");
         query.findObjects(new FindListener<Activity>() {
             @Override
             public void done(List<Activity> object, BmobException e) {
@@ -57,6 +58,7 @@ public class HuoDongPresenterImpl implements HuoDongPresenter{
         BmobQuery<Activity> query = new BmobQuery<Activity>();
         query.addWhereLessThan("updatedAt",new BmobDate(date));
         query.order("-updatedAt");
+        query.include("business");
         query.setLimit(5);
         query.findObjects(new FindListener<Activity>() {
             @Override

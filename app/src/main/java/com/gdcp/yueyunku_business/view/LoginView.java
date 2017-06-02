@@ -8,4 +8,6 @@ public interface LoginView {
     void onLoginSuccess();
 
     void onLoginFailed(String message);
+
+    void notBusiness();
 }

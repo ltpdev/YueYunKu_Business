@@ -46,6 +46,10 @@ public class SendPresenterImpl implements SendPresenter{
 
     @Override
     public void uploadPhotoToBmob(String picPath) {
+        if (picPath==null){
+            sendView.picPathError();
+            return;
+        }
         final BmobFile bmobFile = new BmobFile(new File(picPath));
         bmobFile.uploadblock(new UploadFileListener() {
 
@@ -86,12 +90,8 @@ public class SendPresenterImpl implements SendPresenter{
 
 
     @Override
-    public void publishActivity(String unit, String name, String intro, String fileUrl, String beginTime, String endTime, String rule) {
+    public void publishActivity(String name, String intro, String fileUrl, String beginTime, String endTime, String rule) {
 
-        if (unit.length()==0){
-              sendView.unitError();
-              return;
-          }
         if (name.length()==0){
             sendView.nameError();
             return;
@@ -134,7 +134,6 @@ public class SendPresenterImpl implements SendPresenter{
         showProgress(context.getString(R.string.publishing));
         com.gdcp.yueyunku_business.model.Activity activity=new com.gdcp.yueyunku_business.model.Activity();
         activity.setName(name);
-        activity.setPublishUnit(unit);
         activity.setActivityIntro(intro);
         activity.setPicUrl(fileUrl);
         activity.setBeginTime(beginTime);
@@ -155,11 +154,7 @@ public class SendPresenterImpl implements SendPresenter{
     }
 
     @Override
-    public void publishActivityWithJiangli(String unit, String name, String intro, String fileUrl, String beginTime, String endTime, String rule, String typeJiangping, String jiangpingNum, String kaijiangTime) {
-        if (unit.length()==0){
-            sendView.unitError();
-            return;
-        }
+    public void publishActivityWithJiangli(String name, String intro, String fileUrl, String beginTime, String endTime, String rule, String typeJiangping, String jiangpingNum, String kaijiangTime) {
         if (name.length()==0){
             sendView.nameError();
             return;
@@ -218,7 +213,6 @@ public class SendPresenterImpl implements SendPresenter{
         showProgress(context.getString(R.string.publishing));
         com.gdcp.yueyunku_business.model.Activity activity=new com.gdcp.yueyunku_business.model.Activity();
         activity.setName(name);
-        activity.setPublishUnit(unit);
         activity.setBusiness(BmobUser.getCurrentUser(User.class));
         activity.setActivityIntro(intro);
         activity.setPicUrl(fileUrl);

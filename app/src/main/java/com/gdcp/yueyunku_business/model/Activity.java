@@ -11,7 +11,7 @@ import cn.bmob.v3.BmobObject;
 public class Activity extends BmobObject implements Serializable{
     private String picUrl;
     //发布单位
-    private String publishUnit;
+   /* private String publishUnit;*/
     private String name;
     //活动简称
     private String activityIntro;
@@ -87,13 +87,13 @@ public class Activity extends BmobObject implements Serializable{
         this.picUrl = picUrl;
     }
 
-    public String getPublishUnit() {
+   /* public String getPublishUnit() {
         return publishUnit;
-    }
+    }*/
 
-    public void setPublishUnit(String publishUnit) {
+    /*public void setPublishUnit(String publishUnit) {
         this.publishUnit = publishUnit;
-    }
+    }*/
 
     public String getName() {
         return name;

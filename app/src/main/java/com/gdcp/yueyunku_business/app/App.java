@@ -1,6 +1,7 @@
 package com.gdcp.yueyunku_business.app;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import com.gdcp.yueyunku_business.model.Order;
 
@@ -40,7 +41,6 @@ public class App extends Application{
         orders =new ArrayList<BmobObject>();
         queryData();
         updateData();
-        updateManyData();
     }
 
     private void updateManyData() {
@@ -59,21 +59,27 @@ public class App extends Application{
                         }
                     }
                 }else{
-                    /*Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());*/
+                    //Toast.makeText(App.this, "失败:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
     }
 
+
+
+
     private void updateData() {
-        orders.clear();
+        Toast.makeText(this, objectIdList.size()+"dd", Toast.LENGTH_SHORT).show();
         for (int i = 0; i <objectIdList.size(); i++) {
             Order order=new Order();
             order.setObjectId(objectIdList.get(i));
             order.setState_type(3);
             orders.add(order);
+            Toast.makeText(this, orders.size()+"dd", Toast.LENGTH_SHORT).show();
         }
 
+        updateManyData();
     }
 
     private void queryData() {
@@ -84,24 +90,24 @@ public class App extends Application{
             @Override
             public void done(List<Order> object,BmobException e) {
                 if(e==null){
-                    objectIdList.clear();
+                   /* objectIdList.clear();*/
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String dateNowStr = sdf.format(new Date());
+                    Toast.makeText(App.this, dateNowStr, Toast.LENGTH_SHORT).show();
                     for (int i = 0; i <object.size(); i++) {
                         try {
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                            String dateNowStr = sdf.format(new Date());
                             String bookTime=object.get(i).getBook_time();
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                            Date dNowTime = df.parse(dateNowStr);
-                            Date dBookTime = df.parse(bookTime);
+                            Date dNowTime = sdf.parse(dateNowStr);
+                            Date dBookTime = sdf.parse(bookTime);
                             if (dNowTime.getTime()>dBookTime.getTime()){
                                 objectIdList.add(object.get(i).getObjectId());
                             }
                         } catch (ParseException e1) {
                             e1.printStackTrace();
                         }
-
-
                     }
+
+
                 }else{
 
                 }

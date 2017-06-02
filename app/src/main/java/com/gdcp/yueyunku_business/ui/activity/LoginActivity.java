@@ -105,4 +105,10 @@ public class LoginActivity extends BaseActivity implements LoginView{
 
           hideProgress();
     }
+
+    @Override
+    public void notBusiness() {
+        hideProgress();
+        toast(getString(R.string.notBusiness));
+    }
 }

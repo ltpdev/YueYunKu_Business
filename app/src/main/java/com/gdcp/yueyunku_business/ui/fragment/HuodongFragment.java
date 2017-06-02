@@ -141,7 +141,7 @@ public class HuodongFragment extends BaseFragment implements HuoDongView, LookAc
             case R.id.tv_send:
                 BmobUser user = BmobUser.getCurrentUser();
                 if (user != null) {
-                    startActivity(SendActivity.class,"vendorname",BmobUser.getCurrentUser(User.class).getVendorName() ,false);
+                    startActivity(SendActivity.class,false);
                 } else {
                     toast("你还没登录");
                     startActivity(LoginActivity.class, false);
@@ -164,17 +164,16 @@ public class HuodongFragment extends BaseFragment implements HuoDongView, LookAc
 
     @Override
     public void querySucc(List<Activity> object) {
+        activityList.clear();
         if (object.size()!=0){
-            activityList.clear();
             lastTime=object.get(object.size()-1).getUpdatedAt();
             for (Activity activity : object) {
                 activityList.add(activity);
             }
-            mAdapter.notifyDataSetChanged();
         }else {
             toast(getString(R.string.data_empty));
         }
-
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

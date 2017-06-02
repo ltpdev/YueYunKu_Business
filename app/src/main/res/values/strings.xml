@@ -52,7 +52,7 @@
     <string name="succ_logout">退出登录成功</string>
     <string name="tv_cansee_login">登录后才可以查看</string>
     <string name="commit">完成</string>
-    <string name="name_vendor">商家名称</string>
+    <string name="name_vendor">场馆名称</string>
     <string name="name_user">用户名</string>
     <string name="phone_user">联系电话</string>
     <string name="address_place">场馆地址</string>
@@ -96,4 +96,7 @@
     <string name="Fail_loadMore">加载更多失败</string>
     <string name="data_empty">空空如也！</string>
     <string name="data_end">数据加载已经到底了!</string>
+    <string name="notBusiness">不是商家用户</string>
+    <string name="delete">删除</string>
+    <string name="pic_select_not">你还未选择图片</string>
 </resources>

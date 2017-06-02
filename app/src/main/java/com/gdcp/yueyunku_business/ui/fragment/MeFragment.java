@@ -75,7 +75,7 @@ public class MeFragment extends BaseFragment {
             String username = (String) BmobUser.getObjectByKey("username");
             String num = (String) BmobUser.getObjectByKey("mobilePhoneNumber");
             String url = (String) BmobUser.getObjectByKey("head");
-            String vendorName = (String) BmobUser.getObjectByKey("vendorName");
+            String vendorName = (String) BmobUser.getObjectByKey("username");
             String area = (String) BmobUser.getObjectByKey("area");
             if (url != null) {
                 Glide.with(getActivity()).load(url).into(cvUserHead);
@@ -116,14 +116,14 @@ public class MeFragment extends BaseFragment {
                 }
                 break;
             case R.id.tv_name_user:
-                if (bmobUser != null) {
+               /* if (bmobUser != null) {
                     startActivity(UpdateUserNameActivity.class, "username", (String) BmobUser.getObjectByKey("username"), false);
-                }
+                }*/
                 break;
             case R.id.tv_phone_user:
-                if (bmobUser != null) {
+                /*if (bmobUser != null) {
                     startActivity(UpdatePhoneActivity.class, "phone", (String) BmobUser.getObjectByKey("mobilePhoneNumber"), false);
-                }
+                }*/
                 break;
             case R.id.linearLayout_login:
                 if (bmobUser == null) {
@@ -140,7 +140,7 @@ public class MeFragment extends BaseFragment {
 
             case R.id.linearLayout_vendor_name:
                 if (bmobUser != null) {
-                    startActivity(UpdateVendorNameActivity.class, "vendorname", (String) BmobUser.getObjectByKey("vendorName"), false);
+                    startActivity(UpdateVendorNameActivity.class, "username", (String) BmobUser.getObjectByKey("username"), false);
                 }
                 break;
             case R.id.linearLayout_address_place:

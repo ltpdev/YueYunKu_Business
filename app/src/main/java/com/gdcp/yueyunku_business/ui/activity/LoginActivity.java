@@ -78,6 +78,7 @@ public class LoginActivity extends BaseActivity implements LoginView{
                 mPresenter.login(number,pwd);
                 break;
             case R.id.tv_forgetpwd:
+                startActivity(ResetPwdActivity.class,false);
                 break;
             case R.id.tv_register:
                 startActivity(RegisterActivity.class,false);

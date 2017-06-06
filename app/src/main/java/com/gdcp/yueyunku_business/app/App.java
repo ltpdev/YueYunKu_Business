@@ -30,20 +30,16 @@ import cn.bmob.v3.listener.QueryListListener;
  */
 
 public class App extends Application{
-    private List<String>objectIdList;
-    List<BmobObject> orders;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        Bmob.initialize(getApplicationContext(), "fc17e13ac860610cf084c738f247acad");
+        Bmob.initialize(this, "fc17e13ac860610cf084c738f247acad");
         LitePalApplication.initialize(this);
-        objectIdList=new ArrayList<>();
-        orders =new ArrayList<BmobObject>();
-        queryData();
-        updateData();
+
     }
 
-    private void updateManyData() {
+ /*   private void updateManyData() {
         new BmobBatch().updateBatch(orders).doBatch(new QueryListListener<BatchResult>() {
 
             @Override
@@ -90,7 +86,7 @@ public class App extends Application{
             @Override
             public void done(List<Order> object,BmobException e) {
                 if(e==null){
-                   /* objectIdList.clear();*/
+                   *//* objectIdList.clear();*//*
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     String dateNowStr = sdf.format(new Date());
                     Toast.makeText(App.this, dateNowStr, Toast.LENGTH_SHORT).show();
@@ -114,5 +110,5 @@ public class App extends Application{
             }
 
         });
-    }
+    }*/
 }

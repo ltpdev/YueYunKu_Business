@@ -152,4 +152,9 @@ public class RegisterActivity extends BaseActivity implements RegisterView{
     public void onSendMsgFailed(String message) {
         toast(message);
     }
+
+    @Override
+    public void code_error() {
+        toast(getString(R.string.code_error));
+    }
 }

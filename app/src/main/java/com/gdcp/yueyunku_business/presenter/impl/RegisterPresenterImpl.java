@@ -1,15 +1,17 @@
 package com.gdcp.yueyunku_business.presenter.impl;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 import com.gdcp.yueyunku_business.model.User;
 import com.gdcp.yueyunku_business.presenter.RegisterPresenter;
 
 import com.gdcp.yueyunku_business.utils.StringUtils;
 import com.gdcp.yueyunku_business.view.RegisterView;
-import cn.bmob.sms.BmobSMS;
 import cn.bmob.sms.exception.BmobException;
 import cn.bmob.sms.listener.RequestSMSCodeListener;
+import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import static android.R.attr.name;
 
@@ -27,8 +29,13 @@ public class RegisterPresenterImpl implements RegisterPresenter{
             if (StringUtils.isPhoneNumber(phoneNumber)){
                 if (StringUtils.isVailedPassword(password)) {
                     if (password.equals(confirmpassword)) {
-                        registerView.onStartRegister();
-                        registerToBmob(phoneNumber, password,verificationCode);
+                        if (verificationCode.length()!=0){
+                            registerView.onStartRegister();
+                            registerToBmob(phoneNumber, password,verificationCode);
+                        }else{
+                            registerView.code_error();
+                        }
+
                     } else {
                         registerView.onConfirmpasswordError();
                     }
@@ -75,15 +82,18 @@ public class RegisterPresenterImpl implements RegisterPresenter{
     @Override
     public void requestSMSCode(final Context context, String phoneNumber) {
 
-        BmobSMS.requestSMSCode(context, phoneNumber, "悦运酷",new RequestSMSCodeListener() {
+        BmobSMS.requestSMSCode(phoneNumber, "悦运酷",new QueryListener<Integer>(){
+
             @Override
-            public void done(Integer smsId,BmobException ex) {
-                if(ex==null){
+            public void done(Integer integer, cn.bmob.v3.exception.BmobException e) {
+                if(e==null){
                     registerView.onSendMsgSuccess();
                 }else {
-                    registerView.onSendMsgFailed(ex.getMessage());
+                    registerView.onSendMsgFailed(e.getMessage());
                 }
             }
+
+
         });
     }
 

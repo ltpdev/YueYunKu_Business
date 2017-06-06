@@ -99,4 +99,11 @@
     <string name="notBusiness">不是商家用户</string>
     <string name="delete">删除</string>
     <string name="pic_select_not">你还未选择图片</string>
+    <string name="edt_set_new_pwd">请设置新密码</string>
+    <string name="btn_reset_pwd">重置密码</string>
+    <string name="pwd_reset">重置密码</string>
+    <string name="reseting">正在重置....</string>
+    <string name="reset_pwd_succ">重置密码成功</string>
+    <string name="reset_pwd_fail">重置密码失败，原因:</string>
+    <string name="code_error">你还没填验证码</string>
 </resources>

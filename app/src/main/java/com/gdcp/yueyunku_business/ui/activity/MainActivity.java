@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gdcp.yueyunku_business.R;
+import com.gdcp.yueyunku_business.app.App;
 import com.gdcp.yueyunku_business.event.DingDanEvent;
 import com.gdcp.yueyunku_business.event.PublishSuccessEvent;
 import com.gdcp.yueyunku_business.event.UploadHeadSuccessEvent;
 import com.gdcp.yueyunku_business.factory.FragmentController;
 import com.gdcp.yueyunku_business.factory.FragmentFactory;
 import com.gdcp.yueyunku_business.model.Constant;
+import com.gdcp.yueyunku_business.model.Order;
 import com.gdcp.yueyunku_business.model.User;
 import com.gdcp.yueyunku_business.presenter.MainPresenter;
 import com.gdcp.yueyunku_business.presenter.impl.MainPresenterImpl;
@@ -29,13 +31,23 @@ import com.roughike.bottombar.OnTabSelectListener;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bmob.v3.BmobBatch;
+import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobRealTimeData;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.ValueEventListener;
 import me.iwf.photopicker.PhotoPicker;
@@ -48,6 +60,8 @@ public class MainActivity extends FragmentActivity implements MainView{
     private MainPresenter mainPresenter;
     private BmobUser bmobUser;
     BmobRealTimeData data = new BmobRealTimeData();
+    private List<String> objectIdList;
+    private List<BmobObject> orders;
    /* @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -69,6 +83,11 @@ public class MainActivity extends FragmentActivity implements MainView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        objectIdList=new ArrayList<>();
+        orders =new ArrayList<BmobObject>();
+        //查询类型不等于3的订单，判断是否过期
+        queryData();
+        //updateData();
         init();
         listto();
     }
@@ -191,7 +210,75 @@ public class MainActivity extends FragmentActivity implements MainView{
     }
 
 
+    private void updateManyData() {
+        new BmobBatch().updateBatch(orders).doBatch(new QueryListListener<BatchResult>() {
 
+            @Override
+            public void done(List<BatchResult> o, BmobException e) {
+                if(e==null){
+                    for(int i=0;i<o.size();i++){
+                        BatchResult result = o.get(i);
+                        BmobException ex =result.getError();
+                        if(ex==null){
+                            //log("第"+i+"个数据批量更新成功："+result.getUpdatedAt());
+                        }else{
+                            //log("第"+i+"个数据批量更新失败："+ex.getMessage()+","+ex.getErrorCode());
+                        }
+                    }
+                }else{
+                    //Toast.makeText(App.this, "失败:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+    }
+
+
+
+
+    private void updateData() {
+        for (int i = 0; i <objectIdList.size(); i++) {
+            Order order=new Order();
+            order.setObjectId(objectIdList.get(i));
+            order.setState_type(3);
+            orders.add(order);
+        }
+//批量更新
+        updateManyData();
+    }
+
+    private void queryData() {
+        BmobQuery<Order> query = new BmobQuery<Order>();
+        query.addWhereNotEqualTo("state_type", 3);
+        query.findObjects(new FindListener<Order>() {
+
+            @Override
+            public void done(List<Order> object,BmobException e) {
+                if(e==null){
+                   /* objectIdList.clear();*/
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String dateNowStr = sdf.format(new Date());
+                    for (int i = 0; i <object.size(); i++) {
+                        try {
+                            String bookTime=object.get(i).getBook_time();
+                            Date dNowTime = sdf.parse(dateNowStr);
+                            Date dBookTime = sdf.parse(bookTime);
+                            if (dNowTime.getTime()-dBookTime.getTime()>0){
+                                objectIdList.add(object.get(i).getObjectId());
+                            }
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                    //修改了类型不等于3为3
+                    updateData();
+                }else{
+
+                }
+            }
+
+        });
+    }
 
 
 

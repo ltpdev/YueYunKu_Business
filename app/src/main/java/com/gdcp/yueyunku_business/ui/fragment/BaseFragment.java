@@ -15,6 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.gdcp.yueyunku_business.callback.EmptyCallback;
+import com.gdcp.yueyunku_business.callback.LoadingCallback;
+import com.kingja.loadsir.callback.Callback;
+import com.kingja.loadsir.callback.SuccessCallback;
+import com.kingja.loadsir.core.Convertor;
+import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
+
 import butterknife.ButterKnife;
 
 /**
@@ -26,14 +34,20 @@ public abstract class BaseFragment extends Fragment {
     public static final String TAG = "BaseFragment";
 
     private ProgressDialog mProgressDialog;
+    private View root;
+
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(getLayoutResId(), null);
-        ButterKnife.bind(this, root);
-        init();
+        if (root==null){
+            root = inflater.inflate(getLayoutResId(), null);
+            ButterKnife.bind(this, root);
+            //第二步：注册布局View
+            init();
+
+        }
         return root;
     }
 

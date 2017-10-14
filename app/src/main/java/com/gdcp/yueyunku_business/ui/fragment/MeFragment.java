@@ -16,11 +16,11 @@ import com.bumptech.glide.Glide;
 import com.gdcp.yueyunku_business.R;
 import com.gdcp.yueyunku_business.event.UploadHeadSuccessEvent;
 import com.gdcp.yueyunku_business.ui.activity.LoginActivity;
-import com.gdcp.yueyunku_business.ui.activity.UpdatePhoneActivity;
+import com.gdcp.yueyunku_business.ui.activity.SpaceCommentActivity;
 import com.gdcp.yueyunku_business.ui.activity.UpdatePlaceAddressActivity;
 import com.gdcp.yueyunku_business.ui.activity.UpdatePlaceInfoActivity;
-import com.gdcp.yueyunku_business.ui.activity.UpdateUserNameActivity;
 import com.gdcp.yueyunku_business.ui.activity.UpdateVendorNameActivity;
+import com.kingja.loadsir.core.LoadSir;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,6 +59,8 @@ public class MeFragment extends BaseFragment {
     LinearLayout linearLayoutAddressPlace;
     @BindView(R.id.linearLayout_info_place)
     LinearLayout linearLayoutInfoPlace;
+    @BindView(R.id.linearLayout_comment_place)
+    LinearLayout linearLayoutCommentPlace;
     private BmobUser bmobUser;
 
     @Override
@@ -102,7 +104,7 @@ public class MeFragment extends BaseFragment {
 
     @OnClick({R.id.cv_user_head, R.id.tv_name_user, R.id.tv_phone_user,
             R.id.linearLayout_logout, R.id.linearLayout_login,
-            R.id.linearLayout_vendor_name, R.id.linearLayout_address_place,R.id.linearLayout_info_place})
+            R.id.linearLayout_vendor_name, R.id.linearLayout_address_place, R.id.linearLayout_info_place,R.id.linearLayout_comment_place})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cv_user_head:
@@ -143,15 +145,23 @@ public class MeFragment extends BaseFragment {
                     startActivity(UpdateVendorNameActivity.class, "username", (String) BmobUser.getObjectByKey("username"), false);
                 }
                 break;
+
             case R.id.linearLayout_address_place:
                 if (bmobUser != null) {
                     startActivity(UpdatePlaceAddressActivity.class, "address", tvAddressPlace.getText().toString(), false);
                 }
                 break;
-             case R.id.linearLayout_info_place:
-                 if (bmobUser != null) {
-                     startActivity(UpdatePlaceInfoActivity.class, false);
-                 }
+            case R.id.linearLayout_info_place:
+                if (bmobUser != null) {
+                    startActivity(UpdatePlaceInfoActivity.class, false);
+                }
+                break;
+            case R.id.linearLayout_comment_place:
+                if (bmobUser != null) {
+                    startActivity(SpaceCommentActivity.class, false);
+                }else {
+                    startActivity(LoginActivity.class, false);
+                }
                 break;
 
         }
@@ -175,6 +185,7 @@ public class MeFragment extends BaseFragment {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
 
 
 

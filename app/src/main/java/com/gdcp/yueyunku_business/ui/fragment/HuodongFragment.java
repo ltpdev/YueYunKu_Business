@@ -3,6 +3,7 @@ package com.gdcp.yueyunku_business.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.gdcp.yueyunku_business.R;
 import com.gdcp.yueyunku_business.adapter.HuodongAdapter;
+import com.gdcp.yueyunku_business.callback.EmptyCallback;
 import com.gdcp.yueyunku_business.event.PublishSuccessEvent;
 import com.gdcp.yueyunku_business.listener.LookActivityListener;
 import com.gdcp.yueyunku_business.model.Activity;
@@ -22,9 +24,15 @@ import com.gdcp.yueyunku_business.presenter.impl.HuoDongPresenterImpl;
 import com.gdcp.yueyunku_business.ui.activity.DetailActivity;
 import com.gdcp.yueyunku_business.ui.activity.LoginActivity;
 import com.gdcp.yueyunku_business.ui.activity.SendActivity;
+import com.gdcp.yueyunku_business.utils.PostUtil;
 import com.gdcp.yueyunku_business.view.HuoDongView;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.kingja.loadsir.callback.Callback;
+import com.kingja.loadsir.callback.SuccessCallback;
+import com.kingja.loadsir.core.Convertor;
+import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -55,6 +63,7 @@ public class HuodongFragment extends BaseFragment implements HuoDongView, LookAc
     private List<Activity> activityList;
     private HuoDongPresenter huoDongPresenter;
     private String lastTime;
+    private LoadService loadService;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +80,7 @@ public class HuodongFragment extends BaseFragment implements HuoDongView, LookAc
     protected void init() {
         initToolbar();
         initPresenter();
+        initLoadSir();
         activityList = new ArrayList<Activity>();
         mAdapter = new HuodongAdapter(activityList, getActivity());
         mAdapter.setLookActivityListener(this);
@@ -79,6 +89,30 @@ public class HuodongFragment extends BaseFragment implements HuoDongView, LookAc
         recyclerViewHuodong.setAdapter(mAdapter);
         initListener();
         initData();
+    }
+
+    private void initLoadSir() {
+        loadService = LoadSir.getDefault().register(recyclerViewHuodong, new Callback.OnReloadListener() {
+            @Override
+            public void onReload(View v) {
+                //loadService.showCallback(LoadingCallback.class);
+                //reloadData();
+
+            }}, new Convertor<Integer>() {
+            @Override
+            public Class<? extends Callback> map(Integer integer) {
+                Class<? extends Callback> resultCode = SuccessCallback.class;
+                switch (integer) {
+                    case 100://成功回调
+                        resultCode = SuccessCallback.class;
+                        break;
+                    case 0:
+                        resultCode = EmptyCallback.class;
+                        break;
+                }
+                return resultCode;
+            }
+        });
     }
 
     private void initListener() {
@@ -166,12 +200,14 @@ public class HuodongFragment extends BaseFragment implements HuoDongView, LookAc
     public void querySucc(List<Activity> object) {
         activityList.clear();
         if (object.size()!=0){
+            PostUtil.postCodeDelayed(loadService,100,1000);
             lastTime=object.get(object.size()-1).getUpdatedAt();
             for (Activity activity : object) {
                 activityList.add(activity);
             }
         }else {
-            toast(getString(R.string.data_empty));
+            PostUtil.postCodeDelayed(loadService,0,1000);
+            //toast(getString(R.string.data_empty));
         }
         mAdapter.notifyDataSetChanged();
     }

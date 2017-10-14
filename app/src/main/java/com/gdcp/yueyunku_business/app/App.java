@@ -3,7 +3,10 @@ package com.gdcp.yueyunku_business.app;
 import android.app.Application;
 import android.widget.Toast;
 
+import com.gdcp.yueyunku_business.callback.EmptyCallback;
+import com.gdcp.yueyunku_business.callback.LoadingCallback;
 import com.gdcp.yueyunku_business.model.Order;
+import com.kingja.loadsir.core.LoadSir;
 
 import org.litepal.LitePalApplication;
 
@@ -36,6 +39,11 @@ public class App extends Application{
         super.onCreate();
         Bmob.initialize(this, "fc17e13ac860610cf084c738f247acad");
         LitePalApplication.initialize(this);
+        LoadSir.beginBuilder()
+                .addCallback(new LoadingCallback())
+                .addCallback(new EmptyCallback())
+                .setDefaultCallback(LoadingCallback.class)//设置默认状态页
+                .commit();
 
     }
 

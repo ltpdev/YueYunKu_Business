@@ -98,6 +98,27 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"/>
     <LinearLayout
+        android:id="@+id/linearLayout_comment_place"
+        android:clickable="true"
+        android:background="@drawable/bg_layout_selector"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:drawablePadding="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:drawableLeft="@mipmap/comment"
+            android:text="场馆评论"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <TextView
+        android:background="#33000000"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+    <LinearLayout
         android:id="@+id/linearLayout_info_place"
         android:clickable="true"
         android:background="@drawable/bg_layout_selector"
